@@ -20,6 +20,11 @@
   background: #F03F3B;
 }
 
+::-webkit-scrollbar-track {
+  margin-top: 20px;
+  margin-bottom: 20px
+}
+
 body {
   margin: 0;
   font-family: 'HelveticaNeue', sans-serif;

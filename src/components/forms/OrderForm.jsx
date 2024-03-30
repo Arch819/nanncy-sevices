@@ -8,6 +8,17 @@ import {
 import { useFormik } from "formik";
 import React from "react";
 import { object, string } from "yup";
+import {
+  DescFormStyle,
+  NameNannyStyle,
+  NannyAvatarStyle,
+  NannyBoxStyle,
+  OccupationStyle,
+  OrderFormStyle,
+  TextFieldStyle,
+  TitleFormStyle,
+} from "./OrderForm.styled";
+import { Button } from "../Button";
 
 const validationSchema = object().shape({
   address: string().required("Address is required"),
@@ -45,24 +56,24 @@ export const OrderForm = () => {
   });
   return (
     <div>
-      <h2>Make an appointment with a babysitter </h2>
-      <p>
+      <TitleFormStyle>Make an appointment with a babysitter </TitleFormStyle>
+      <DescFormStyle>
         Arranging a meeting with a caregiver for your child is the first step to
         creating a safe and comfortable environment. Fill out the form below so
         we can match you with the perfect care partner.
-      </p>
-      <div>
-        <img src={nanny.avatar_url} alt="avatar your nanny" />
+      </DescFormStyle>
+      <NannyBoxStyle>
+        <NannyAvatarStyle src={nanny.avatar_url} alt="avatar your nanny" />
         <div>
-          {" "}
-          <p>Your nanny</p>
-          <h3>{nanny.name}</h3>
+          <OccupationStyle>Your nanny</OccupationStyle>
+          <NameNannyStyle>{nanny.name}</NameNannyStyle>
         </div>
-      </div>
-      <form onSubmit={formik.handleSubmit}>
-        <TextField
+      </NannyBoxStyle>
+      <OrderFormStyle onSubmit={formik.handleSubmit}>
+        <TextFieldStyle
           fullWidth
           id="address"
+          className="address"
           name="address"
           label="Address"
           value={formik.values.address}
@@ -70,8 +81,9 @@ export const OrderForm = () => {
           error={formik.touched.address && Boolean(formik.errors.address)}
           helperText={formik.touched.address && formik.errors.address}
         />
-        <TextField
+        <TextFieldStyle
           fullWidth
+          className="phone"
           id="phone"
           mask="(+380) 000-0000"
           name="phone"
@@ -81,8 +93,9 @@ export const OrderForm = () => {
           error={formik.touched.phone && Boolean(formik.errors.phone)}
           helperText={formik.touched.phone && formik.errors.phone}
         />
-        <TextField
+        <TextFieldStyle
           fullWidth
+          className="childs-age"
           id="childsAge"
           name="childsAge"
           label="Child's age"
@@ -115,8 +128,9 @@ export const OrderForm = () => {
           })}
         </Select> */}
         {/* </FormControl> */}
-        <TextField
+        <TextFieldStyle
           fullWidth
+          className="meeting-time"
           id="meetingTime"
           name="meetingTime"
           // label="Meeting Time"
@@ -133,7 +147,7 @@ export const OrderForm = () => {
           }
           helperText={formik.touched.meetingTime && formik.errors.meetingTime}
         />
-        <TextField
+        <TextFieldStyle
           fullWidth
           id="email"
           name="email"
@@ -143,7 +157,7 @@ export const OrderForm = () => {
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
         />
-        <TextField
+        <TextFieldStyle
           fullWidth
           id="parentsName"
           name="parentsName"
@@ -155,7 +169,7 @@ export const OrderForm = () => {
           }
           helperText={formik.touched.parentsName && formik.errors.parentsName}
         />
-        <TextField
+        <TextFieldStyle
           fullWidth
           id="comment"
           name="comment"
@@ -167,8 +181,14 @@ export const OrderForm = () => {
           error={formik.touched.comment && Boolean(formik.errors.comment)}
           helperText={formik.touched.comment && formik.errors.comment}
         />
-        <button type="submit">Send</button>
-      </form>
+        <Button
+          text="Send"
+          width="100%"
+          dv_p="16px"
+          type="submit"
+          bg="#F03F3B"
+        />
+      </OrderFormStyle>
     </div>
   );
 };

@@ -5,7 +5,6 @@ import { SignUpForm } from "../forms/SignUpForm";
 import { SignInForm } from "../forms/SignInForm";
 import sprite from "../../img/sprite.svg";
 import {
-  RegistrationBtnStyle,
   SignActionsListStyle,
   UserActionsBoxStyle,
   UserInfoBoxStyle,
@@ -51,7 +50,13 @@ export const UserActions = () => {
             </div>
             <p className="user-name">Irina</p>
           </UserInfoBoxStyle>
-          <Button text={"Log out"} width={134} />
+          <Button
+            text={"Log out"}
+            width={134}
+            mv_p="8px 16px"
+            tv_p="12px 32px"
+            dv_p="14px 40px"
+          />
         </UserLoggedInBoxStyle>
       ) : (
         <SignActionsListStyle>

@@ -35,7 +35,7 @@ export const DialogComponent = ({
       sx={{ zIndex: zIndex }}
     >
       <DialogContentStyle>
-        <BtnCloseDialogStyle>
+        <BtnCloseDialogStyle onClick={handleClose}>
           <svg className="close-icon" width={32} height={32} stroke="#11101C">
             <use href={`${sprite}#icon-close`}></use>
           </svg>
