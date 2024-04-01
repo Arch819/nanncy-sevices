@@ -6,24 +6,23 @@ export const selectFavoriteFilter = (state) => state.favorite.favoriteFilter;
 export const filteredFavoriteNannies = createSelector(
   [selectFavorite, selectFavoriteFilter],
   (favorite, filter) => {
-    const filterFavorite = favorite;
     switch (filter) {
       case "A to Z":
-        return sortList(filterFavorite, "AZ");
+        return sortList(favorite, "AZ");
       case "Z to A":
-        return sortList(filterFavorite, "ZA");
+        return sortList(favorite, "ZA");
       case "Less than 10$":
-        return filterLessGreaterThanTen(filterFavorite, "<");
+        return filterLessGreaterThanTen(favorite, "<");
       case "Greater than 10$":
-        return filterLessGreaterThanTen(filterFavorite, ">");
+        return filterLessGreaterThanTen(favorite, ">");
       case "Popular":
-        return sortList(filterFavorite, "ratingUp");
+        return sortList(favorite, "ratingUp");
       case "Not popular":
-        return sortList(filterFavorite, "ratingDown");
+        return sortList(favorite, "ratingDown");
       case "Show all":
-        return filterFavorite;
+        return favorite;
       default:
-        return filterFavorite;
+        return favorite;
     }
   }
 );
@@ -34,13 +33,13 @@ function sortList(array, type) {
   }
   let arraySort;
   if (type === "AZ") {
-    arraySort = array.sort((a, b) => a.name.localeCompare(b.name));
+    arraySort = [...array].sort((a, b) => a.name.localeCompare(b.name));
   } else if (type === "ZA") {
-    arraySort = array.sort((a, b) => b.name.localeCompare(a.name));
+    arraySort = [...array].sort((a, b) => b.name.localeCompare(a.name));
   } else if (type === "ratingUp") {
-    arraySort = array.sort((a, b) => a.rating - b.rating);
+    arraySort = [...array].sort((a, b) => a.rating - b.rating);
   } else if (type === "ratingDown") {
-    arraySort = array.sort((a, b) => b.rating - a.rating);
+    arraySort = [...array].sort((a, b) => b.rating - a.rating);
   } else {
     arraySort = array;
   }

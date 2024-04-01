@@ -34,39 +34,31 @@ export const SignFormStyle = {
 export const SignFormInputStyle = styled(TextField)`
   width: 100%;
   border: none;
-  & > div {
-    height: 40px;
-    border: none;
+  .MuiInputBase-root {
     border-radius: 12px;
     border-color: #11101c1a;
   }
   .MuiInputLabel-root {
-    top: -8px;
     font-family: inherit;
-    &:focused {
-    }
-    transform: translate(14px, -1px) scale(0.75);
+    font-size: 14px;
+    line-height: 1.25;
   }
 
-  input {
-    border-radius: 12px;
-    padding: 8px 12px;
+  .MuiInputBase-input {
+    padding: 12px 46px 12px 14px;
   }
   @media screen and (min-width: 768px) {
-    .MuiInputLabel-root {
-      top: 0;
-      transform: (14px, -9px) scale(0.75);
-    }
-    div {
-      height: 52px;
+    .MuiInputBase-root {
       border: none;
       border-radius: 16px;
       border-color: #11101c1a;
     }
+    .MuiInputLabel-root {
+      font-size: 16px;
+    }
 
-    input {
-      border-radius: 16px;
-      padding: 16px 18px;
+    .MuiInputBase-input {
+      padding: 16px 60px 16px 18px;
     }
   }
 `;

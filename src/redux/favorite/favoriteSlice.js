@@ -7,7 +7,7 @@ const favoriteSlice = createSlice({
   initialState,
   reducers: {
     changeFavoriteFilter(state, { payload }) {
-      state.filter = payload;
+      state.favoriteFilter = payload;
     },
     addToFavorite(state, { payload }) {
       const isItemInList = isInclude(state.favoriteNannies, "_id", payload._id);
@@ -17,11 +17,12 @@ const favoriteSlice = createSlice({
     },
     removeFromFavorite(state, { payload }) {
       state.favoriteNannies = state.favoriteNannies.filter(
-        (i) => i._id !== payload._id
+        (i) => i._id !== payload
       );
     },
   },
 });
 
 export const favoriteReducer = favoriteSlice.reducer;
-export const { addToFavorite, removeFromFavorite } = favoriteSlice.actions;
+export const { addToFavorite, removeFromFavorite, changeFavoriteFilter } =
+  favoriteSlice.actions;

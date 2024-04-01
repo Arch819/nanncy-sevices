@@ -5,9 +5,11 @@ import {
   NavListStyle,
   NavigationStyle,
 } from "./Navigation.styled";
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../../redux/auth/authSelectors";
 
 export const Navigation = () => {
-  const isLoggedIn = true;
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   return (
     <NavigationStyle>
       <Logo />

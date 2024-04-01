@@ -1,9 +1,9 @@
-import { Box, IconButton, InputAdornment, TextField } from "@mui/material";
-import { Visibility } from "@mui/icons-material";
+import { Box } from "@mui/material";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { object, string } from "yup";
 import sprite from "../../img/sprite.svg";
+import { Button } from "../Button";
 import {
   PasswordEyesBtnStyle,
   PasswordInputBoxStyle,
@@ -12,7 +12,6 @@ import {
   SignFormStyle,
   SignFormTitleStyle,
 } from "./SignForm.style";
-import { Button } from "../Button";
 
 const validationSchema = object().shape({
   email: string().email().required(),
@@ -50,6 +49,7 @@ export const SignInForm = () => {
         onSubmit={formik.handleSubmit}
         sx={SignFormStyle}
         autoFocus={true}
+        autoComplete="off"
       >
         <SignFormInputStyle
           name="email"
@@ -59,6 +59,7 @@ export const SignInForm = () => {
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
           onBlur={formik.handleBlur}
+          autoComplete="off"
         />
         <PasswordInputBoxStyle>
           <SignFormInputStyle
@@ -70,11 +71,13 @@ export const SignInForm = () => {
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
             onBlur={formik.handleBlur}
+            autoComplete="off"
           />
           <PasswordEyesBtnStyle
             aria-label="toggle password visibility"
             onClick={handleClickShowPassword}
             onMouseDown={handleMouseDownPassword}
+            type="button"
           >
             {showPassword ? (
               <svg width={22} height={22} stroke="currentColor">
@@ -91,7 +94,6 @@ export const SignInForm = () => {
           type="submit"
           text="Log In"
           width="100%"
-          bg="#F03F3B"
           tv_p="16px"
           br_c="transparent"
         />

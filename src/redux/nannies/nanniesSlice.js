@@ -6,7 +6,6 @@ const nanniesSlice = createSlice({
   initialState,
   reducers: {
     changeFilter(state, { payload }) {
-      console.log(payload);
       state.filter = payload;
     },
   },

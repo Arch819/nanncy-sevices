@@ -5,6 +5,11 @@ import { handleFulfilled, handlePending, handleRejected } from "./appHelpers";
 const appSlice = createSlice({
   name: "app",
   initialState,
+  reducers: {
+    togglePopUp(state, { payload }) {
+      state.popUp = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addMatcher((action) => action.type.endsWith("/pending"), handlePending)
@@ -17,3 +22,4 @@ const appSlice = createSlice({
 });
 
 export const appReducer = appSlice.reducer;
+export const { togglePopUp } = appSlice.actions;

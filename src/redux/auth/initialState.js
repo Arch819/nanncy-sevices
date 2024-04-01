@@ -2,7 +2,7 @@ export const initialState = {
   profile: {
     name: "",
     email: "",
-    avatar: "",
+    avatar_url: "",
   },
   isLoggedIn: false,
   isRefresh: false,

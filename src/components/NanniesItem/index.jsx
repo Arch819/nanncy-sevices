@@ -1,6 +1,14 @@
 import React, { useState } from "react";
-import sprite from "../../img/sprite.svg";
 import getFirstLetter from "../../utils/getFirstLetter";
+import { Button } from "../Button";
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../../redux/auth/authSelectors";
+import { togglePopUp } from "../../redux/appState/appStateSlice";
+import {
+  addToFavorite,
+  removeFromFavorite,
+} from "../../redux/favorite/favoriteSlice";
+import sprite from "../../img/sprite.svg";
 import {
   AboutTextStyle,
   AddToFavoriteBtnStyle,
@@ -18,9 +26,6 @@ import {
   WorkInfoItemStyle,
   WorkInfoStyle,
 } from "./NanniesItem.styled";
-import { Button } from "../Button";
-import { DialogComponent } from "../DialogComponent";
-import { OrderForm } from "../forms/OrderForm";
 
 const age = (birthday) => {
   const birthDate = new Date(birthday);
@@ -39,11 +44,13 @@ const age = (birthday) => {
   return age;
 };
 
-export const NanniesItem = ({ data }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+export const NanniesItem = ({ data, isFavorite }) => {
   const [isOpenMoreInfo, setIsOpenMoreInfo] = useState(false);
-  const [isOpenPopUp, setIsOpenPopUp] = useState(false);
+
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const {
+    _id,
     name,
     avatar_url,
     birthday,
@@ -58,8 +65,18 @@ export const NanniesItem = ({ data }) => {
     rating,
   } = data;
 
-  const handleToggleFavorite = () => {
-    setIsFavorite((prev) => !prev);
+  const openPopUp = (popUp) => {
+    dispatch(togglePopUp(popUp));
+  };
+
+  const handleAddToFavorite = () => {
+    if (isLoggedIn) {
+      dispatch(addToFavorite(data));
+    }
+    openPopUp("notAuthorized");
+  };
+  const handleRemoveFromFavorite = () => {
+    dispatch(removeFromFavorite(_id));
   };
 
   return (
@@ -69,16 +86,29 @@ export const NanniesItem = ({ data }) => {
           <div className="status" />
           <img src={avatar_url} alt="Nannie avatar" className="avatar" />
         </NannieAvatarBox>
-        <AddToFavoriteBtnStyle
-          className="btn-icon"
-          onClick={handleToggleFavorite}
-          aria-label={isFavorite ? "remove from favorite" : "add to favorite"}
-          $isFavorite={isFavorite}
-        >
-          <svg width={18} height={18} className="btn-icon">
-            <use href={`${sprite}#icon-heart`}></use>
-          </svg>
-        </AddToFavoriteBtnStyle>
+        {isFavorite ? (
+          <AddToFavoriteBtnStyle
+            className="btn-icon"
+            onClick={handleRemoveFromFavorite}
+            aria-label={isFavorite ? "remove from favorite" : "add to favorite"}
+            $isFavorite={isFavorite}
+          >
+            <svg width={18} height={18} className="btn-icon">
+              <use href={`${sprite}#icon-heart`}></use>
+            </svg>
+          </AddToFavoriteBtnStyle>
+        ) : (
+          <AddToFavoriteBtnStyle
+            className="btn-icon"
+            onClick={handleAddToFavorite}
+            aria-label={isFavorite ? "remove from favorite" : "add to favorite"}
+            $isFavorite={isFavorite}
+          >
+            <svg width={18} height={18} className="btn-icon">
+              <use href={`${sprite}#icon-heart`}></use>
+            </svg>
+          </AddToFavoriteBtnStyle>
+        )}
         <NameBoxStyle>
           <p className="occupation">Nanny</p>
           <h3 className="name">{name}</h3>
@@ -96,7 +126,7 @@ export const NanniesItem = ({ data }) => {
               <use href={`${sprite}#icon-star`}></use>
             </svg>
             <p className="text">Rating:</p>
-            <p className="text">{rating.toFixed(1)}</p>
+            <p className="text">{rating?.toFixed(1)}</p>
           </WorkInfoItemStyle>
           <BetweenDecorIconStyle />
           <WorkInfoItemStyle>
@@ -126,7 +156,7 @@ export const NanniesItem = ({ data }) => {
             <DetailInfoItemStyle>
               <p>
                 Characters:{" "}
-                <span className="value">{characters.join(", ")}</span>
+                <span className="value">{characters?.join(", ")}</span>
               </p>
             </DetailInfoItemStyle>
             <DetailInfoItemStyle>
@@ -139,7 +169,7 @@ export const NanniesItem = ({ data }) => {
           <ReviewsListStyle
             className={isOpenMoreInfo ? "show" : "visibility-hidden"}
           >
-            {reviews.map((r, i) => (
+            {reviews?.map((r, i) => (
               <li key={i}>
                 <ReviewerInfoBoxStyle>
                   <p className="avatar">{getFirstLetter(r.reviewer)}</p>
@@ -159,11 +189,10 @@ export const NanniesItem = ({ data }) => {
           </ReviewsListStyle>
           {isOpenMoreInfo ? (
             <Button
-              onClick={() => setIsOpenPopUp(true)}
+              onClick={() => openPopUp("order")}
               text="Make an appointment"
               mv_p="8px 16px"
               tv_p="14px 30px"
-              bg="#F03F3B"
             />
           ) : (
             <ReadMoreBtnStyle onClick={() => setIsOpenMoreInfo(true)}>
@@ -172,14 +201,6 @@ export const NanniesItem = ({ data }) => {
           )}
         </DetailInfoStyle>
       </NanniesItemStyle>
-      {isOpenPopUp && (
-        <DialogComponent
-          open={isOpenPopUp}
-          handleClose={() => setIsOpenPopUp(false)}
-        >
-          <OrderForm />
-        </DialogComponent>
-      )}
     </>
   );
 };

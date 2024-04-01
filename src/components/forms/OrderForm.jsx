@@ -181,13 +181,7 @@ export const OrderForm = () => {
           error={formik.touched.comment && Boolean(formik.errors.comment)}
           helperText={formik.touched.comment && formik.errors.comment}
         />
-        <Button
-          text="Send"
-          width="100%"
-          dv_p="16px"
-          type="submit"
-          bg="#F03F3B"
-        />
+        <Button text="Send" width="100%" dv_p="16px" type="submit" />
       </OrderFormStyle>
     </div>
   );

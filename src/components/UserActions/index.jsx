@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { DialogComponent } from "../DialogComponent";
-import { SignUpForm } from "../forms/SignUpForm";
-import { SignInForm } from "../forms/SignInForm";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button } from "../Button";
+import { togglePopUp } from "../../redux/appState/appStateSlice";
+import {
+  selectIsLoggedIn,
+  selectProfile,
+} from "../../redux/auth/authSelectors";
 import sprite from "../../img/sprite.svg";
 import {
   SignActionsListStyle,
@@ -10,29 +13,14 @@ import {
   UserInfoBoxStyle,
   UserLoggedInBoxStyle,
 } from "./UserActions.styled.";
-import { Button } from "../Button";
 
 export const UserActions = () => {
-  const [signPopUp, setSignPopUp] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const dispatch = useDispatch();
+  const user = useSelector(selectProfile);
 
-  // const user = useSelector();
-  const user = {};
-
-  const popUp = () => {
-    if (signPopUp === "signIn") {
-      return <SignInForm />;
-    }
-    if (signPopUp === "signUp") {
-      return <SignUpForm />;
-    }
-  };
-  const handleClosePopUp = () => {
-    setSignPopUp("");
-  };
-
-  const handleToggleLoggedIn = () => {
-    setIsLoggedIn((prev) => !prev);
+  const openPopUp = (popUp) => {
+    dispatch(togglePopUp(popUp));
   };
   return (
     <UserActionsBoxStyle>
@@ -62,17 +50,18 @@ export const UserActions = () => {
         <SignActionsListStyle>
           <li>
             <Button
-              onClick={() => setSignPopUp("signIn")}
+              onClick={() => openPopUp("signIn")}
               text="Log In"
               mv_p="8px 16px"
               tv_p="12px 32px"
               dv_p="14px 40px"
+              bg="transparent"
             />
           </li>
           <li>
             <Button
               className={"sign-up"}
-              onClick={() => setSignPopUp("signUp")}
+              onClick={() => openPopUp("signUp")}
               text="Registration"
               br_c="transparent"
               mv_p="8px 16px"
@@ -84,15 +73,6 @@ export const UserActions = () => {
           </li>
         </SignActionsListStyle>
       )}
-      <DialogComponent open={Boolean(signPopUp)} handleClose={handleClosePopUp}>
-        {popUp()}
-      </DialogComponent>
-      <button
-        style={{ position: "absolute", right: "0" }}
-        onClick={handleToggleLoggedIn}
-      >
-        Toggle
-      </button>
     </UserActionsBoxStyle>
   );
 };

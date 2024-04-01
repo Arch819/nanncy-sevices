@@ -3,13 +3,15 @@ import { ButtonStyle } from "./Button.styled";
 
 export const Button = ({
   text,
+  children,
   width,
-  mv_p = "12px",
-  tv_p = "14px",
+  mv_p = "8px 12px",
+  tv_p = "14px 30px",
   dv_p = "14px",
-  bg = "transparent",
+  bg = "#F03F3B",
   br_c = "#FBFBFB66",
   color = "#FBFBFB",
+  center = false,
   onClick,
   type = "button",
   className,
@@ -26,8 +28,10 @@ export const Button = ({
       $bg={bg}
       $br_c={br_c}
       $t_color={color}
+      $center={center}
     >
       {text}
+      {children}
     </ButtonStyle>
   );
 };

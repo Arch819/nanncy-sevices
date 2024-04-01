@@ -1,9 +1,6 @@
 import React from "react";
 import sprite from "../../img/sprite.svg";
 import { filterOptions } from "../../data/filterNannies";
-import { useDispatch, useSelector } from "react-redux";
-import { selectFilter } from "../../redux/nannies/nanniesSelectors";
-import { changeFilter } from "../../redux/nannies/nanniesSlice";
 import {
   FilterContainerStyle,
   FilterLabelStyle,
@@ -34,13 +31,10 @@ const ChevronDownIcon = () => (
   </svg>
 );
 
-export const Filter = () => {
-  const dispatch = useDispatch();
-  const filter = useSelector(selectFilter);
+export const Filter = ({ filter, onChangeFilter }) => {
   const handleChange = (event) => {
     const { value } = event.target;
-    console.log("value", value);
-    dispatch(changeFilter(value));
+    onChangeFilter(value);
   };
   return (
     <FilterContainerStyle>

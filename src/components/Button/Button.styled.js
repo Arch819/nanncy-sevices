@@ -8,6 +8,12 @@ export const ButtonStyle = styled.button`
   border-color: ${(props) => props.$br_c};
   border-radius: 12px;
 
+  ${(props) =>
+    props.$center &&
+    `
+    margin: 0 auto;
+  `}
+
   font-size: 12px;
   font-weight: 500;
   line-height: 1.25;

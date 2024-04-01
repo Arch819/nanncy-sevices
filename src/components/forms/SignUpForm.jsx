@@ -1,4 +1,4 @@
-import { Box, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { object, string } from "yup";
@@ -91,6 +91,7 @@ export const SignUpForm = () => {
             aria-label="toggle password visibility"
             onClick={handleClickShowPassword}
             onMouseDown={handleMouseDownPassword}
+            type="button"
           >
             {showPassword ? (
               <svg width={22} height={22} stroke="currentColor">
@@ -107,7 +108,6 @@ export const SignUpForm = () => {
           type="submit"
           text="Sign Up"
           width="100%"
-          bg="#F03F3B"
           tv_p="16px"
           br_c="transparent"
         />

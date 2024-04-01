@@ -30,8 +30,8 @@ export const DialogContentStyle = styled(DialogContent)`
 
 export const BtnCloseDialogStyle = styled.button`
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  right: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,4 +39,14 @@ export const BtnCloseDialogStyle = styled.button`
   padding: 0;
   border: none;
   background: transparent;
+  @media screen and (min-width: 768px) {
+    .close-icon {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  @media screen and (min-width: 1440px) {
+    top: 20px;
+    right: 20px;
+  }
 `;

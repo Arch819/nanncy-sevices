@@ -7,6 +7,12 @@ import {
   DialogContentStyle,
   DialogRootStyle,
 } from "./DialogComponent.styled";
+import { useSelector } from "react-redux";
+import { selectPopUp } from "../../redux/appState/appStateSelectors";
+import { SignInForm } from "../forms/SignInForm";
+import { SignUpForm } from "../forms/SignUpForm";
+import { NotAuthorized } from "../PopUp/NotAuthorized";
+import { OrderForm } from "../forms/OrderForm";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   const { children, ...otherProps } = props;
@@ -18,12 +24,27 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export const DialogComponent = ({
-  children,
   handleClose,
   open,
   fullScreen = false,
   zIndex = "1300",
 }) => {
+  const popUp = useSelector(selectPopUp);
+  const visiblePopUp = () => {
+    switch (popUp) {
+      case "signIn":
+        return <SignInForm />;
+      case "signUp":
+        return <SignUpForm />;
+      case "order":
+        return <OrderForm />;
+      case "notAuthorized":
+        return <NotAuthorized />;
+      default:
+        return;
+    }
+  };
+
   return (
     <DialogRootStyle
       open={open}
@@ -36,11 +57,11 @@ export const DialogComponent = ({
     >
       <DialogContentStyle>
         <BtnCloseDialogStyle onClick={handleClose}>
-          <svg className="close-icon" width={32} height={32} stroke="#11101C">
+          <svg className="close-icon" width={20} height={20} stroke="#11101C">
             <use href={`${sprite}#icon-close`}></use>
           </svg>
         </BtnCloseDialogStyle>
-        {children}
+        {visiblePopUp()}
       </DialogContentStyle>
     </DialogRootStyle>
   );
